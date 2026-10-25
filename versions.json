@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.1.2",
+    "channel": "stable",
+    "revision": "r0",
+    "download_url": "https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.2/PiPlayer-0.1.2-Full-SD.zip",
+    "download_url_cn": "",
+    "download_url_backup": "",
+    "sha256": "92a262d4233f2853fb2a45e038c940b98cc639d45f232714b5e65c8e2d4a99f2",
+    "size": 6758792,
+    "nro_url": "https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.2/PiPlayer-0.1.2.nro",
+    "preview_url": "https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.2/PiPlayer-0.1.2-Startup-Preview.gif",
+    "notes": "0.1.2 正式版：保持 yinyueku 音源，改善连接重试、播放缓冲与快进歌词同步；主应用和 Tesla 统一为 0.1.2。"
+  },
+  {
     "version": "0.1.1",
     "channel": "stable",
     "revision": "r0",
