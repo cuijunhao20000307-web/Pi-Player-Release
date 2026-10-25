@@ -11,6 +11,7 @@ on:
       - 'SHA256SUMS.txt'
       - 'RELEASE_*.md'
       - 'scripts/publish.py'
+      - 'scripts/audit_release.py'
       - '.github/workflows/publish.yml'
   workflow_dispatch:
 
@@ -28,6 +29,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Audit publicly distributed files
+        run: python3 scripts/audit_release.py
       - name: Verify release files
         run: python3 scripts/publish.py --verify-only
       - name: Publish stable release and download files
