@@ -36,6 +36,8 @@ Pi Player（圆周率音乐播放器）官方发布仓库，作者 **LINKO**。
 
 正式安装包通过本仓库的 **Releases** 发布。`version.json` 保存当前正式版本，`versions.json` 保存正式版历史。下载校验值见每个 Release 的 `SHA256SUMS.txt`。
 
-本仓库用于发行与反馈；开发仓库独立管理。完整安装包内附相关许可证及对应源码。
+本仓库用于发行与反馈，主程序的日常开发仓库单独管理。**注意：当前完整 SD 安装包内含 `licenses/pi-player/source.tar.gz`、`licenses/sys-tune/source.tar.gz`、`licenses/libtesla/source.tar.gz` 等源码归档，随公开安装包对外提供；开发仓库私有并不意味着发布包不含源码。** 发行脚本 `scripts/publish.py` 也属于公开文件。
+
+源码归档、许可证义务、历史附件风险与发布前检查说明见 [SOURCE_AND_LICENSES.md](SOURCE_AND_LICENSES.md)。发布前应执行 `python3 scripts/audit_release.py` 和 `python3 scripts/publish.py --verify-only`。
 
 Pi Player 是非官方 Homebrew 项目，与 Nintendo 无隶属关系。在线曲目可用性取决于音源站点和网络，请支持正版并使用有权访问的内容。
