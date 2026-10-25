@@ -4,14 +4,14 @@
 
 Pi Player（圆周率音乐播放器）官方发布仓库，作者 **LINKO**。
 
-当前版本：**0.1.0 正式版 · R1 启动波纹修正版**。Tesla 菜单名称：**Piplayer**。
+当前版本：**0.1.1 正式版**。Tesla 菜单名称：**Piplayer**。
 
 ## 下载
 
 - [最新正式版](https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/latest)
-- [完整 SD 安装包](https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.0/PiPlayer-0.1.0-R1-Full-SD.zip)：首次安装或使用 Tesla / 后台播放时，请下载这个包。
-- [单独主应用 NRO](https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.0/PiPlayer-0.1.0.nro)：适用于已安装完整环境、只替换主应用的情况。
-- [启动动画 GIF 预览](https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.0/PiPlayer-0.1.0-Ripple-Preview.gif)
+- [完整 SD 安装包](https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.1/PiPlayer-0.1.1-Full-SD.zip)：首次安装或使用 Tesla / 后台播放时，请下载这个包。
+- [单独主应用 NRO](https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.1/PiPlayer-0.1.1.nro)：适用于已安装完整环境、只替换主应用的情况。
+- [启动动画 GIF 预览](https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.1/PiPlayer-0.1.1-Startup-Preview.gif)
 
 ![启动动画预览](assets/startup.gif)
 
@@ -27,7 +27,8 @@ Pi Player（圆周率音乐播放器）官方发布仓库，作者 **LINKO**。
 
 ## 功能
 
-- 中文界面、在线搜索、歌曲缓存、封面和歌词。
+- 中文界面、在线搜索分页与继续加载、歌曲缓存、封面和歌词。
+- 收藏立即保存、备份恢复、多选与全选批量收藏。
 - 本地 MP3 / FLAC / WAV 音乐、本地 LRC、收藏与播放队列。
 - Tesla 播放控制、音量和可拖动进度条，以及停止并退出。
 - 程序绘制的 4 秒启动动画，包含两圈向外扩散的水滴波纹。

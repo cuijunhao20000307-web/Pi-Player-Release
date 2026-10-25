@@ -2,11 +2,11 @@
 
 本仓库只用于对外发行 Pi Player，不作为日常开发仓库。开发仓库 `Pi-Player` 当前为私有仓库，**但这不表示发布包没有源码**。
 
-## 当前 0.1.0 R1 实际情况
+## 当前 0.1.1 实际情况
 
 - GitHub 默认生成的 “Source code (zip/tar.gz)” 是这个**发行仓库**的快照，主要包含发行说明和 `scripts/publish.py`，不是 Pi Player 主程序的完整开发仓库。
-- 已发布的 `PiPlayer-0.1.0-R1-Full-SD.zip` 在 `licenses/` 中附带 `pi-player/source.tar.gz`、`sys-tune/source.tar.gz`、`libtesla/source.tar.gz`。这些源码归档随公开安装包分发，**不能将它们描述为私有**。
-- `PiPlayer-0.1.0.nro` 和 Tesla `.ovl` 是编译产物，不是可直接编辑的主程序源码。
+- 已发布的 `PiPlayer-0.1.1-Full-SD.zip` 在 `licenses/` 中附带 `pi-player/source.tar.gz`、`sys-tune/source.tar.gz`、`libtesla/source.tar.gz`。这些源码归档随公开安装包分发，**不能将它们描述为私有**。
+- `PiPlayer-0.1.1.nro` 和 Tesla `.ovl` 是编译产物，不是可直接编辑的主程序源码。
 - 公开仓库中的 `scripts/publish.py` 是发行脚本源码，继续保持公开。
 
 ## 许可证注意事项
