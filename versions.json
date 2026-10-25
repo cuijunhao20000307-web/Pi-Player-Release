@@ -1,0 +1,15 @@
+[
+  {
+    "version": "0.1.0",
+    "channel": "stable",
+    "revision": "r1",
+    "download_url": "https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.0/PiPlayer-0.1.0-R1-Full-SD.zip",
+    "download_url_cn": "",
+    "download_url_backup": "",
+    "sha256": "4bdc36b9f20f50aef7413549106b98b3ad8a2aa74a1a7e96c664a0d9ffc7d08f",
+    "size": 6723813,
+    "nro_url": "https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.0/PiPlayer-0.1.0.nro",
+    "preview_url": "https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.0/PiPlayer-0.1.0-Ripple-Preview.gif",
+    "notes": "0.1.0 正式版：Tesla 名称 Piplayer；程序绘图启动动画，R1 修正两圈水滴波纹。"
+  }
+]

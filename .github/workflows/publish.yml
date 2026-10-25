@@ -1,0 +1,36 @@
+name: Publish official release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - 'assets/startup.gif'
+      - 'version.json'
+      - 'versions.json'
+      - 'SHA256SUMS.txt'
+      - 'RELEASE_*.md'
+      - 'scripts/publish.py'
+      - '.github/workflows/publish.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-stable
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Verify and publish Pi Player
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify release files
+        run: python3 scripts/publish.py --verify-only
+      - name: Publish stable release and download files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/publish.py
