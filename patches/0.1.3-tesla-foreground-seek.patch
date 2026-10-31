@@ -1,0 +1,56 @@
+diff --git a/overlay/source/main.cpp b/overlay/source/main.cpp
+index b43abf0..0a2b55b 100644
+--- a/overlay/source/main.cpp
++++ b/overlay/source/main.cpp
+@@ -486,7 +486,10 @@ public:
+     }
+     bool onTouch(tsl::elm::TouchEvent event,s32 x,s32 y,s32,s32,s32,s32) override {
+         if(event==tsl::elm::TouchEvent::Touch){
+-            dragging=inBounds(x,y)&&readProgress(*state);
++            // A foreground SDL session is mirrored for display only. Backend
++            // seek IPC would target an unrelated (possibly stale) queue entry.
++            // Also ignore missing/zero-length tracks during handoff.
++            dragging=inBounds(x,y)&&readProgress(*state)&&!state->foreground&&state->rate>0&&state->total>1;
+             dragAudio=dragging?state->audio:"";
+         }
+         if(!dragging)return false;
+@@ -496,7 +499,8 @@ public:
+             dragging=false;
+             // An out-of-panel release cancels; a song switch during the drag
+             // must not apply the old song's fraction to the new song.
+-            if(inBounds(x,y)&&readProgress(*state)&&overlay_media::sameAudio(dragAudio,state->audio)){
++            if(inBounds(x,y)&&readProgress(*state)&&!state->foreground&&state->rate>0&&state->total>1&&
++               overlay_media::sameAudio(dragAudio,state->audio)){
+                 if(R_SUCCEEDED(audiusTuneSeek(std::min(state->total-1,u32(double(state->total)*preview)))))readProgress(*state);
+             }
+         }
+diff --git a/tests/overlay_interaction_test.cpp b/tests/overlay_interaction_test.cpp
+index 599b6c5..cdb797d 100644
+--- a/tests/overlay_interaction_test.cpp
++++ b/tests/overlay_interaction_test.cpp
+@@ -152,8 +152,25 @@ int main(){
+         current.next={};current.refresh(audio.c_str());assert(current.cover[0]==2); // HD cover arrives after first draw
+         backend::reset();backend::readFail=true;backend::queueCount=0;
+         Progress handedOff;assert(readProgress(handedOff)&&handedOff.foreground&&!handedOff.playing&&handedOff.position==45000&&handedOff.audio==audio);
++        // The Tesla scrubber can display a snapshot from a foreground SDL
++        // session, but cannot seek it through the unrelated backend IPC.
++        // Previously this sent a backend seek to the last cached queue entry.
++        ProgressRow foregroundScrubber(&handedOff);
++        foregroundScrubber.setBoundaries(20,225,408,60);
++        foregroundScrubber.onTouch(E::Touch,220,245,220,245,220,245);
++        foregroundScrubber.onTouch(E::Release,300,245,220,245,220,245);
++        assert(backend::seeks==0);
+         backend::readFail=false;backend::playing=true;backend::path=audio;
+         assert(readProgress(handedOff)&&!handedOff.foreground&&handedOff.playing&&handedOff.position==backend::position);
++        // The source can switch to foreground while a user is dragging;
++        // release must not leak the seek into an old background queue.
++        ProgressRow switchedScrubber(&handedOff);
++        switchedScrubber.setBoundaries(20,225,408,60);
++        switchedScrubber.onTouch(E::Touch,220,245,220,245,220,245);
++        backend::readFail=true;
++        switchedScrubber.onTouch(E::Release,300,245,220,245,220,245);
++        assert(backend::seeks==0);
++        backend::readFail=false;
+         backend::playing=false;assert(readProgress(handedOff)&&!handedOff.playing);
+         MusicOverlay shown;const auto oldPresentation=presentation;shown.onShow();assert(presentation==oldPresentation+1);
+         f=fopen("sdmc:/switch/piplayer/favorites.tsv","wb");assert(f);
