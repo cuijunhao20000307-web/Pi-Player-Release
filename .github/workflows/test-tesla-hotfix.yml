@@ -43,6 +43,7 @@ jobs:
           test -s overlay/piplayer-overlay.ovl
           mkdir -p ../hotfix/switch/.overlays
           cp overlay/piplayer-overlay.ovl ../hotfix/switch/.overlays/
+          test "$(stat -c%s ../hotfix/switch/.overlays/piplayer-overlay.ovl)" -gt 20000
           cat > ../hotfix/README.txt <<'EOF'
           PiPlayer 0.1.3 Tesla seek hotfix
           This package replaces ONLY switch/.overlays/piplayer-overlay.ovl.
@@ -56,4 +57,5 @@ jobs:
           name: PiPlayer-0.1.3-Tesla-Seek-Hotfix
           path: hotfix/
           if-no-files-found: error
+          include-hidden-files: true
           retention-days: 30
