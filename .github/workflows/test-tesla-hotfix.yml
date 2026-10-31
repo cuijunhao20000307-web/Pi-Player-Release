@@ -1,0 +1,59 @@
+name: Build PiPlayer 0.1.3 Tesla Seek Hotfix
+
+on:
+  push:
+    branches: ['fix/0.1.3-tesla-foreground-seek']
+    paths:
+      - 'patches/0.1.3-tesla-foreground-seek.patch'
+      - '.github/workflows/test-tesla-hotfix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkita64:latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recover exact 0.1.3 release source and apply hotfix
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fLSs --retry 3 \
+            https://github.com/cuijunhao20000307-web/Pi-Player-Release/releases/download/0.1.3/PiPlayer-0.1.3-Full-SD.zip \
+            -o /tmp/piplayer-0.1.3.zip
+          echo '97e90f37d143d667b7e85e8cdfba86b1e8a28fe4c83effc68216877904d9c187  /tmp/piplayer-0.1.3.zip' | sha256sum -c -
+          mkdir -p source-tree
+          unzip -p /tmp/piplayer-0.1.3.zip licenses/pi-player/source.tar.gz | tar -xz -C source-tree
+          cd source-tree
+          git apply --check ../patches/0.1.3-tesla-foreground-seek.patch
+          git apply ../patches/0.1.3-tesla-foreground-seek.patch
+          bash tests/run.sh
+      - name: Build tested Piplayer overlay only
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH=/opt/devkitpro/devkitA64/bin:/opt/devkitpro/tools/bin:$PATH
+          cd source-tree
+          bash scripts/install-libtesla.sh
+          make overlay -j2
+          test -s overlay/piplayer-overlay.ovl
+          mkdir -p ../hotfix/switch/.overlays
+          cp overlay/piplayer-overlay.ovl ../hotfix/switch/.overlays/
+          cat > ../hotfix/README.txt <<'EOF'
+          PiPlayer 0.1.3 Tesla seek hotfix
+          This package replaces ONLY switch/.overlays/piplayer-overlay.ovl.
+          Install on top of official 0.1.3 Full-SD; restart Tesla / reboot.
+          Prevents Tesla from seeking stale backend audio while showing a foreground SDL playback snapshot.
+          Main NRO, sys-tune, favorites and music files are unchanged.
+          EOF
+      - name: Upload Tesla-only SD patch
+        uses: actions/upload-artifact@v4
+        with:
+          name: PiPlayer-0.1.3-Tesla-Seek-Hotfix
+          path: hotfix/
+          if-no-files-found: error
+          retention-days: 30
